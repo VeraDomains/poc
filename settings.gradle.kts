@@ -1,3 +1,3 @@
 rootProject.name = "vera-poc"
 
-include("server")
+include("server", "crypto")
