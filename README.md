@@ -6,3 +6,5 @@ This is a working, throwaway prototype of the core of [Vera](https://vera.domain
 - Identifying the libraries, tools and systems that we could leverage in an eventual implementation, as well as the Vera-agnostic components that we'd have to build.
 - Getting a sense of the effort required to implement the protocol.
 - Understanding the data storage and data processing capacity required by the various components of the system.
+
+[Read the wiki](https://github.com/VeraDomains/poc/wiki) to learn more about the outcome of this project.
