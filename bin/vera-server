@@ -1,0 +1,6 @@
+#!/bin/bash
+. "$(dirname "${BASH_SOURCE[0]}")/_bootstrap.sh"
+
+cd "${ROOT_DIR}/.."
+
+exec ./vera-ca/build/install/vera-ca/bin/vera-ca "${@}"

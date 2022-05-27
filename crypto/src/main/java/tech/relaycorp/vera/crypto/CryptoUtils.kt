@@ -10,7 +10,7 @@ internal fun getSHA256Digest(input: ByteArray): ByteArray {
     return digest.digest(input)
 }
 
-internal fun getSHA256DigestHex(input: ByteArray) =
+fun getSHA256DigestHex(input: ByteArray) =
     getSHA256Digest(input).joinToString("") { "%02x".format(it) }
 
 internal val BC_PROVIDER = BouncyCastleProvider()
