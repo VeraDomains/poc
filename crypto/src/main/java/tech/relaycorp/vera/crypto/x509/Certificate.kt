@@ -50,7 +50,7 @@ class Certificate constructor(internal val certificateHolder: X509CertificateHol
          * @suppress
          */
         @Throws(CertificateException::class)
-        internal fun issue(
+        fun issue(
             subjectCommonName: String,
             subjectPublicKey: PublicKey,
             issuerPrivateKey: PrivateKey,

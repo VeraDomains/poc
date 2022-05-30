@@ -8,5 +8,5 @@ class MainCommand : CliktCommand(name = "vera-server") {
 }
 
 fun main(args: Array<String>) = MainCommand()
-    .subcommands(KeyGen())
+    .subcommands(KeyGen(), GenerateRootCA())
     .main(args)
