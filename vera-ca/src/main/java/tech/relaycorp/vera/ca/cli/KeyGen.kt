@@ -7,7 +7,7 @@ import tech.relaycorp.vera.core.dns.RootCARecord
 import tech.relaycorp.vera.core.dns.RootKeyDigest
 import tech.relaycorp.vera.crypto.generateRSAKeyPair
 
-class Bootstrap: CliktCommand(help="Create a new CA") {
+class KeyGen: CliktCommand(help="Create a new key pair") {
     private val domain by argument()
     private val privateKeyOutputPath by argument()
 
