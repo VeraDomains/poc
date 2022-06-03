@@ -38,17 +38,17 @@ First, as an Organisation Admin (OA) you have to provision Vera:
 
 The Organisation Member (OM) should first provision their Vera key pair:
 
-1. Generate a private key and save it to `member-org-private-key.der`:
+1. Generate a private key and save it to `member-private-key.der`:
    ```shell
    openssl genpkey \
      -algorithm rsa-pss \
      -pkeyopt rsa_keygen_bits:2048 \
      -outform DER \
-     -out member-org-private-key.der
+     -out member-private-key.der
    ```
 2. Extract the public key and save it to `member-public-key.der`:
    ```shell
-   openssl rsa -inform DER -in member-org-private-key.der -outform DER -pubout > member-public-key.der
+   openssl rsa -inform DER -in member-private-key.der -outform DER -pubout > member-public-key.der
    ```
 
 Then the OA can issue a Vera Id to the OM (in the real world this would only be done after authenticating the OM):
@@ -90,7 +90,7 @@ An OM holding a Vera Id can sign a given plaintext as follows:
 
 ```shell
 ./bin/vera-app sign \
-  member-org-private-key.der \
+  member-private-key.der \
   member-id.der \
   <plaintext.txt >signature.der
 ```
