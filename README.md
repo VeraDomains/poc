@@ -34,7 +34,7 @@ First, as an Organisation Admin (OA) you have to provision Vera:
     ```
 2. Go to your DNS hosting provider and create the `TXT` record output above.
 
-### Issue a Vera id to a member
+### Issue a Vera Id to a member
 
 The Organisation Member (OM) should first provision their Vera key pair:
 
@@ -58,13 +58,13 @@ Then the OA can issue a Vera Id to the OM (in the real world this would only be 
    ./bin/vera-ca get-dnssec-chain chores.fans > dnssec-chain.der
    ```
    
-   This chain can be cached and reused across Vera Ids, but you should always aim to use a recent chain since those expire.
+   This chain can be cached and reused across Vera Ids, but the more recent the better since chains expire.
 2. Generate a certificate for the organisation and save it to `root-ca.der`:
    ```shell
     ./bin/vera-ca generate-root-ca chores.fans > root-ca.der
     ```
 
-   This too can be cached and reused across Vera Ids, but you should always aim to use a recent one.
+   This too can be cached and reused across Vera Ids, but the more recent the better.
 
    By default, the certificate will be valid for 90 days. To customise this, use the option `--ttl`; for example, `--ttl=30d` for 30 days.
 3. Issue the id to the member (using their public key) and save it to `member-id.der`:
