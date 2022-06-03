@@ -28,9 +28,9 @@ We'll use `chores.fans` as an example but make sure to use your own domain name.
 
 First, as an Organisation Admin (OA) you have to provision Vera:
 
-1. Generate a private key for your organisation and save it to `private-key.der`:
+1. Generate a private key for your organisation and save it to `org-private-key.der`:
    ```shell
-    ./bin/vera-ca key-gen chores.fans private-key.der
+    ./bin/vera-ca key-gen chores.fans org-private-key.der
     ```
 2. Go to your DNS hosting provider and create the `TXT` record output above.
 
@@ -38,17 +38,17 @@ First, as an Organisation Admin (OA) you have to provision Vera:
 
 The Organisation Member (OM) should first provision their Vera key pair:
 
-1. Generate a private key and save it to `member-private-key.der`:
+1. Generate a private key and save it to `member-org-private-key.der`:
    ```shell
    openssl genpkey \
      -algorithm rsa-pss \
      -pkeyopt rsa_keygen_bits:2048 \
      -outform DER \
-     -out member-private-key.der
+     -out member-org-private-key.der
    ```
 2. Extract the public key and save it to `member-public-key.der`:
    ```shell
-   openssl rsa -inform DER -in member-private-key.der -outform DER -pubout > member-public-key.der
+   openssl rsa -inform DER -in member-org-private-key.der -outform DER -pubout > member-public-key.der
    ```
 
 Then the OA can issue a Vera Id to the OM (in the real world this would only be done after authenticating the OM):
@@ -59,10 +59,10 @@ Then the OA can issue a Vera Id to the OM (in the real world this would only be 
    ```
    
    This chain can be cached and reused across Vera Ids, but the more recent the better since chains expire.
-2. Generate a certificate for the organisation and save it to `root-ca.der`:
+2. Generate a certificate for the organisation and save it to `org-certificate.der`:
    ```shell
     ./bin/vera-ca generate-root-ca chores.fans \
-      <private-key.der > root-ca.der
+      <org-private-key.der > org-certificate.der
     ```
 
    This too can be cached and reused across Vera Ids, but the more recent the better.
@@ -72,8 +72,8 @@ Then the OA can issue a Vera Id to the OM (in the real world this would only be 
    ```shell
    ./bin/vera-ca issue-member-id \
      dnssec-chain.der \
-     private-key.der \
-     root-ca.der \
+     org-private-key.der \
+     org-certificate.der \
      1.2.3.4.5 \
      <member-public-key.der >member-id.der
    ```
@@ -90,7 +90,7 @@ An OM holding a Vera Id can sign a given plaintext as follows:
 
 ```shell
 ./bin/vera-app sign \
-  member-private-key.der \
+  member-org-private-key.der \
   member-id.der \
   <plaintext.txt >signature.der
 ```
