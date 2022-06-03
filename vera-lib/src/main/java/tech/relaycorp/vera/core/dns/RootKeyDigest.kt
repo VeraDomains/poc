@@ -6,7 +6,7 @@ import java.util.Base64
 import tech.relaycorp.vera.crypto.getSHA256Digest
 
 data class RootKeyDigest(val rsaModulus: Int, val digestBase64: String) {
-    val txtValue get() = "rsa-${rsaModulus} sha256:${digestBase64}"
+    val txtValue get() = "rsa${rsaModulus}-sha256:${digestBase64}"
 
     companion object {
         fun initFromPublicKey(publicKey: PublicKey): RootKeyDigest {
