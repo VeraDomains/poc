@@ -98,7 +98,7 @@ An OM holding a Vera Id can sign a given plaintext as follows:
 Where:
 
 - `plaintext.txt` is the file to be signed. It can be binary.
-- `signature.der` will be the resulting _Vera Signature_.
+- `signature.der` will be the resulting Vera signature.
 
 The OM can now share the two files above with anyone that wants to verify the authenticity of `plaintext.txt`.
 
