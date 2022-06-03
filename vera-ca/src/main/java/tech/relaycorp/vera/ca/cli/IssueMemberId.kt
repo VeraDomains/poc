@@ -2,11 +2,13 @@ package tech.relaycorp.vera.ca.cli
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.arguments.argument
-import com.github.ajalt.clikt.parameters.arguments.convert
+import com.github.ajalt.clikt.parameters.options.convert
+import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.option
 import java.io.File
 import java.time.ZonedDateTime
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
 import kotlin.time.toJavaDuration
 import tech.relaycorp.vera.core.MemberIdBundle
 import tech.relaycorp.vera.core.dns.RootCAChain
@@ -22,7 +24,7 @@ class IssueMemberId : CliktCommand("Issue a member id bundle") {
     private val caPrivateKeyPath by argument()
     private val caCertificatePath by argument()
     private val serviceId by argument()
-    private val ttl by argument().convert { Duration.parse(it) }
+    private val ttl by option().convert { Duration.parse(it) }.default(30.days)
 
     override fun run() {
         val caKeyPair = File(caPrivateKeyPath).readBytes().deserializeRSAKeyPair()
