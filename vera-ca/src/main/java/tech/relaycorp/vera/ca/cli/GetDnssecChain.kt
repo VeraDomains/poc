@@ -7,7 +7,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import tech.relaycorp.vera.core.dns.RootCAChain
 
-class GetVeraTXT : CliktCommand("Retrieve the Vera TXT record") {
+class GetDnssecChain : CliktCommand("Retrieve the Vera TXT record") {
     private val domain by argument()
 
     override fun run() {

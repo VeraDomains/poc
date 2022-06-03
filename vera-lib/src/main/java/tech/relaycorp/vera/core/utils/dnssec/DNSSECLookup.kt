@@ -19,9 +19,9 @@ import org.xbill.DNS.dnssec.ValidatingResolver
 import tech.relaycorp.vera.core.VeraException
 
 internal class DNSSECLookup(
-    val rrset: List<RRset>,
+    val rrset: RRset,
     val parentZones: List<DNSSECZone>,
-    val rootDNSKEY: List<RRset>
+    val rootDNSKEY: RRset
 ) {
 
     companion object {
@@ -60,17 +60,18 @@ internal class DNSSECLookup(
         }
 
         private suspend fun lookUpZone(name: Name): DNSSECZone {
-            val dsRRSet = if (name.toString(false) != "") lookUpRRSet(name, "DS") else listOf(
+            val dsRRSet = if (name.toString(false) != "")
+                lookUpRRSet(name, "DS")
+            else
                 RRset(
                     Record.newRecord(Name.fromConstantString("."), Type.DS, DClass.IN)
                 )
-            )
             val dnskeyRRSet = lookUpRRSet(name, "DNSKEY")
             return DNSSECZone(dsRRSet, dnskeyRRSet)
         }
 
         @Throws(IOException::class)
-        private suspend fun lookUpRRSet(name: Name, type: String): List<RRset> {
+        private suspend fun lookUpRRSet(name: Name, type: String): RRset {
             val recordType = Type.value(type)
             val queryRecord = Record.newRecord(name, recordType, DClass.IN)
             val response: Message = withContext(coroutineContext) {
@@ -83,11 +84,13 @@ internal class DNSSECLookup(
             if (!adFlag) {
                 throw VeraException("DNSSEC validation failed")
             }
-            val rrSets = response.getSectionRRsets(Section.ANSWER)
-            if (rrSets.none { it.type == recordType }) {
+            val allRRSets = response.getSectionRRsets(Section.ANSWER)
+            val relevantRRSet = try {
+                allRRSets.single { it.type == recordType }
+            } catch (exc: NoSuchElementException) {
                 throw VeraException("$name/$type is unset")
             }
-            return rrSets
+            return relevantRRSet
         }
     }
 }

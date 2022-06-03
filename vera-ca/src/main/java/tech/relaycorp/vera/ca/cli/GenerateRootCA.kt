@@ -1,7 +1,6 @@
 package tech.relaycorp.vera.ca.cli
 
 import com.github.ajalt.clikt.core.CliktCommand
-import com.github.ajalt.clikt.core.InvalidFileFormat
 import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.option
@@ -15,10 +14,7 @@ class GenerateRootCA : CliktCommand("Create a new root CA certificate") {
     private val ttlDays by option().long().default(90)
 
     override fun run() {
-        if (System.`in`.available() == 0) {
-            throw InvalidFileFormat("stdin", "Private key should be passed via stdin")
-        }
-        val privateKeySerialized = System.`in`.readBytes()
+        val privateKeySerialized = readStdin("Private key should be passed via stdin")
         val keyPair = privateKeySerialized.deserializeRSAKeyPair()
         val now = ZonedDateTime.now()
         val certificate = Certificate.issue(

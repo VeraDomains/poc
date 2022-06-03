@@ -58,7 +58,8 @@ class Certificate constructor(internal val certificateHolder: X509CertificateHol
             issuerCertificate: Certificate? = null,
             isCA: Boolean = false,
             pathLenConstraint: Int = 0,
-            validityStartDate: ZonedDateTime = ZonedDateTime.now()
+            validityStartDate: ZonedDateTime = ZonedDateTime.now(),
+            additionalExtensions: List<CertificateExtension> = emptyList(),
         ): Certificate {
             val expiryDate = if (issuerCertificate != null) minOf(
                 issuerCertificate.expiryDate,
@@ -105,6 +106,14 @@ class Certificate constructor(internal val certificateHolder: X509CertificateHol
             }
             val aki = AuthorityKeyIdentifier(issuerSKI.keyIdentifier)
             builder.addExtension(Extension.authorityKeyIdentifier, false, aki)
+
+            additionalExtensions.forEach {
+                builder.addExtension(
+                    it.oid,
+                    it.isCritical,
+                    it.getValue(),
+                )
+            }
 
             val signer = JcaContentSignerBuilder("SHA256WITHRSAANDMGF1")
                 .setProvider(BC_PROVIDER)
