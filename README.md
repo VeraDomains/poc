@@ -61,7 +61,8 @@ Then the OA can issue a Vera Id to the OM (in the real world this would only be 
    This chain can be cached and reused across Vera Ids, but the more recent the better since chains expire.
 2. Generate a certificate for the organisation and save it to `root-ca.der`:
    ```shell
-    ./bin/vera-ca generate-root-ca chores.fans > root-ca.der
+    ./bin/vera-ca generate-root-ca chores.fans \
+      <private-key.der > root-ca.der
     ```
 
    This too can be cached and reused across Vera Ids, but the more recent the better.
@@ -71,7 +72,7 @@ Then the OA can issue a Vera Id to the OM (in the real world this would only be 
    ```shell
    ./bin/vera-ca issue-member-id \
      dnssec-chain.der \
-     root-private-key.der \
+     private-key.der \
      root-ca.der \
      1.2.3.4.5 \
      <member-public-key.der >member-id.der
@@ -83,10 +84,24 @@ Then the OA can issue a Vera Id to the OM (in the real world this would only be 
 
    By default, the Vera Id will be valid for 30 days. To customise this, use the option `--ttl`; for example, `--ttl=7d` for 7 days or `--ttl=48h` for 48 hours.
 
-### Sign plaintext with a Vera Id
+### Produce Vera signature
 
-TODO
+An OM holding a Vera Id can sign a given plaintext as follows:
 
-### Verify signature
+```shell
+./bin/vera-app sign \
+  member-private-key.der \
+  member-id.der \
+  <plaintext.txt >signature.der
+```
+
+Where:
+
+- `plaintext.txt` is the file to be signed. It can be binary.
+- `signature.der` will be the resulting _Vera Signature_.
+
+The OM can now share the two files above with anyone that wants to verify the authenticity of `plaintext.txt`.
+
+### Verify Vera signature
 
 TODO

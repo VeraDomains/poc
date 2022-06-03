@@ -27,7 +27,7 @@ import tech.relaycorp.vera.crypto.x509.Certificate
 /**
  * Relaynet-specific, CMS SignedData representation.
  */
-internal class SignedData(internal val bcSignedData: CMSSignedData) {
+class SignedData(internal val bcSignedData: CMSSignedData) {
     /**
      * The signed plaintext, if it was encapsulated.
      */
