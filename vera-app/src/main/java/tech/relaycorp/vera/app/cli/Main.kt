@@ -8,5 +8,5 @@ class MainCommand : CliktCommand(name = "vera-app") {
 }
 
 fun main(args: Array<String>) = MainCommand()
-    .subcommands(Sign())
+    .subcommands(Sign(), Verify())
     .main(args)

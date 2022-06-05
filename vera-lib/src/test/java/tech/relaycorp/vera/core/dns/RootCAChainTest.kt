@@ -6,6 +6,12 @@ import org.junit.jupiter.api.Test
 
 class RootCAChainTest {
     @Test
+    fun verification() = runBlocking {
+        val chain = RootCAChain.retrieve("chores.fans")
+        chain.verify()
+    }
+
+    @Test
     fun identity() = runBlocking {
         val chain = RootCAChain.retrieve("chores.fans")
         val chainSerialized = chain.serialise()

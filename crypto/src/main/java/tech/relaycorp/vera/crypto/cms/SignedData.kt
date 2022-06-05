@@ -69,7 +69,7 @@ class SignedData(internal val bcSignedData: CMSSignedData) {
      * @param expectedPlaintext The plaintext to be verified if none is encapsulated
      */
     @Throws(SignedDataException::class)
-    fun verify(expectedPlaintext: ByteArray? = null) {
+    fun verify(expectedPlaintext: ByteArray? = null, signerCertificate: Certificate) {
         if (plaintext != null && expectedPlaintext != null) {
             throw SignedDataException(
                 "No specific plaintext should be expected because one is already encapsulated"
@@ -79,16 +79,13 @@ class SignedData(internal val bcSignedData: CMSSignedData) {
             ?: expectedPlaintext
             ?: throw SignedDataException("Plaintext should be encapsulated or explicitly set")
 
-        if (signerCertificate == null) {
-            throw SignedDataException("Signer certificate should be encapsulated")
-        }
         val signedData = CMSSignedData(
             CMSProcessableByteArray(signedPlaintext),
             bcSignedData.toASN1Structure()
         )
         val signerInfo = getSignerInfo(signedData)
         val verifierBuilder = JcaSimpleSignerInfoVerifierBuilder().setProvider(BC_PROVIDER)
-        val verifier = verifierBuilder.build(signerCertificate!!.certificateHolder)
+        val verifier = verifierBuilder.build(signerCertificate.certificateHolder)
         val isValid = try {
             signerInfo.verify(verifier)
         } catch (exc: CMSException) {

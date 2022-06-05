@@ -198,6 +198,17 @@ class Certificate constructor(internal val certificateHolder: X509CertificateHol
      */
     internal val isCA: Boolean by lazy { basicConstraints?.isCA == true }
 
+    val extensions: List<RawCertificateExtension> by lazy {
+        certificateHolder.extensions.extensionOIDs.map {
+            val bcExtension = certificateHolder.extensions.getExtension(it)
+            RawCertificateExtension(
+                bcExtension.extnId,
+                bcExtension.isCritical,
+                bcExtension.extnValue,
+            )
+        }
+    }
+
     /**
      * Report whether this certificate equals another.
      */

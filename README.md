@@ -17,8 +17,7 @@ This is a working, throwaway prototype of the core of [Vera](https://vera.domain
 
 ## Install
 
-1. Install the project with `./gradlew build`.
-3. Compile the CLIs with `./bin/compile-clis`.
+Simply run `./gradlew build`.
 
 ## Usage
 
@@ -104,4 +103,13 @@ The OM can now share the two files above with anyone that wants to verify the au
 
 ### Verify Vera signature
 
-TODO
+Now anyone can verify the signature as follows:
+
+```shell
+./bin/vera-app verify signature.der 1.2.3.4.5 <plaintext.txt
+```
+
+Apart from checking that the plaintext was signed with the private key corresponding to the Member Id encapsulated in the signature, the following is also enforced:
+
+- The service id (`1.2.3.4.5` in the example) must match the service id that the OA used to issue the Member Id.
+- The Member Id must not be older than 30 days. This can be changed with the `--ttl` option; for example, `--ttl=24h` for 24 hours.
