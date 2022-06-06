@@ -31,6 +31,8 @@ First, as an Organisation Admin (OA) you have to provision Vera:
    ```shell
     ./bin/vera-ca key-gen chores.fans org-private-key.der
     ```
+
+   By default, the Vera TXT time-to-live (TTL) will be set to 90 days. To customise this, use the option `--ttl`; for example, `--ttl=60d` for 60 days.
 2. Go to your DNS hosting provider and create the `TXT` record output above.
 
 ### Issue a Vera Id to a member
