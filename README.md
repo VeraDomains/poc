@@ -13,7 +13,7 @@ This is a working, throwaway prototype of the core of [Vera](https://vera.domain
 ## Prerequisites
 
 - System dependencies: Bash, Java 8+ and OpenSSL.
-- A domain with DNSSEC properly configure. Use [DNSSEC Analyzer](https://dnssec-analyzer.verisignlabs.com/) to check that DNSSEC is indeed working properly.
+- A domain with DNSSEC properly configured. Use [DNSSEC Analyzer](https://dnssec-analyzer.verisignlabs.com/) to check that DNSSEC is indeed working properly.
 
 ## Install
 
