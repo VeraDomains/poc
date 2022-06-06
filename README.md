@@ -8,7 +8,7 @@ This is a working, throwaway prototype of the core of [Vera](https://vera.domain
 - Getting a sense of the effort required to implement the protocol.
 - Understanding the data storage and data processing capacity required by the various components of the system.
 
-[Read the wiki](https://github.com/VeraDomains/poc/wiki) to learn more about the outcome of this project.
+[Read the wiki](https://github.com/VeraDomains/poc/wiki) to learn more about the outcome of this project, or [watch this prototype in action](https://www.youtube.com/watch?v=K2vbMOjur_E).
 
 ## Prerequisites
 
